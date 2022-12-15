@@ -13,6 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import React, { useContext } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -35,8 +36,11 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
+import { StatContext } from "context/house";
+
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [stat] = useContext(StatContext);
 
   return (
     <DashboardLayout>
@@ -48,8 +52,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="weekend"
-                title="Bookings"
-                count={281}
+                title="Total publications"
+                count={stat.statHouse}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -62,8 +66,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                title="Total en vente"
+                count={stat.statSale}
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -77,8 +81,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
-                count="34k"
+                title="Total location"
+                count={stat.statRen}
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -92,8 +96,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Utilisateurs"
+                count={stat.statUser}
                 percentage={{
                   color: "success",
                   amount: "",
