@@ -19,7 +19,8 @@ import PropTypes from "prop-types";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-function DataTableBodyCell({ noBorder, align, children }) {
+// eslint-disable-next-line react/prop-types
+function DataTableBodyCell({ noBorder, align, children, click }) {
   return (
     <MDBox
       component="td"
@@ -32,10 +33,11 @@ function DataTableBodyCell({ noBorder, align, children }) {
       })}
     >
       <MDBox
+        onClick={() => click(children.props.row.index)}
         display="inline-block"
         width="max-content"
         color="text"
-        sx={{ verticalAlign: "middle" }}
+        sx={{ verticalAlign: "middle", cursor: "pointer" }}
       >
         {children}
       </MDBox>

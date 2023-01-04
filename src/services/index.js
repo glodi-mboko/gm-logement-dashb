@@ -6,3 +6,8 @@ export const getStats = async () => {
   const response = await api.get("/realEstate/stats");
   return response;
 };
+
+export const getRealEstate = async () => {
+  const response = await api.get("/realEstate");
+  return response;
+};

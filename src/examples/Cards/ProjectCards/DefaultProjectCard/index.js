@@ -75,11 +75,8 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
           }}
         />
       </MDBox>
-      <MDBox mt={1} mx={0.5}>
-        <MDTypography variant="button" fontWeight="regular" color="text" textTransform="capitalize">
-          {label}
-        </MDTypography>
-        <MDBox mb={1}>
+      <MDBox mt={1} mx={1} my={1}>
+        <MDBox>
           {action.type === "internal" ? (
             <MDTypography
               component={Link}
@@ -102,6 +99,15 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
             </MDTypography>
           )}
         </MDBox>
+        <MDTypography
+          my={2}
+          variant="button"
+          fontWeight="regular"
+          color="text"
+          textTransform="capitalize"
+        >
+          {label}
+        </MDTypography>
         <MDBox mb={3} lineHeight={0}>
           <MDTypography variant="button" fontWeight="light" color="text">
             {description}

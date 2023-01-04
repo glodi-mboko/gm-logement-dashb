@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { getStats } from "services";
+import { getStats, getRealEstate } from "services";
 
 export const StatContext = createContext();
 
@@ -23,5 +23,28 @@ export function StatProvider({ children }) {
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <StatContext.Provider value={[stat, setStat]}>{children}</StatContext.Provider>
+  );
+}
+
+export const HouseContext = createContext();
+
+// eslint-disable-next-line react/prop-types
+export function HouseProvider({ children }) {
+  const [houses, setHouse] = useState([]);
+  const getHouses = () => {
+    getRealEstate()
+      .then((res) => {
+        if (res.status === 200) {
+          setHouse(res.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getHouses();
+  }, []);
+  return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <HouseContext.Provider value={[houses, setHouse]}>{children}</HouseContext.Provider>
   );
 }

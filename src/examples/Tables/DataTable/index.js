@@ -47,6 +47,8 @@ function DataTable({
   pagination,
   isSorted,
   noEndBorder,
+  // eslint-disable-next-line react/prop-types
+  click,
 }) {
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
   const entries = entriesPerPage.entries
@@ -207,6 +209,7 @@ function DataTable({
               <TableRow {...row.getRowProps()}>
                 {row.cells.map((cell) => (
                   <DataTableBodyCell
+                    click={click}
                     noBorder={noEndBorder && rows.length - 1 === key}
                     align={cell.column.align ? cell.column.align : "left"}
                     {...cell.getCellProps()}

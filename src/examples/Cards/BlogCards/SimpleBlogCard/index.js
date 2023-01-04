@@ -45,7 +45,7 @@ function SimpleBlogCard({ image, title, description, action }) {
         />
         <MDBox
           borderRadius="lg"
-          shadow="md"
+          shadow="sm"
           width="100%"
           height="100%"
           position="absolute"
@@ -60,10 +60,10 @@ function SimpleBlogCard({ image, title, description, action }) {
         />
       </MDBox>
       <MDBox p={3}>
-        <MDTypography display="inline" variant="h3" textTransform="capitalize" fontWeight="bold">
-          {title}
+        <MDTypography display="inline" variant="h5" textTransform="capitalize" fontWeight="bold">
+          {title.toUpperCase()}
         </MDTypography>
-        <MDBox mt={2} mb={3}>
+        <MDBox mb={3}>
           <MDTypography variant="body2" component="p" color="text">
             {description}
           </MDTypography>
