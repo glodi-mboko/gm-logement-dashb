@@ -49,7 +49,12 @@ import routes from "routes";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
-import { StatProvider, HouseProvider } from "context/house";
+import {
+  StatProvider,
+  HouseProvider,
+  HousesForSalesProvider,
+  HousesForRenProvider,
+} from "context/house";
 
 // Images
 import brandWhite from "assets/images/gm-logement.png";
@@ -153,26 +158,32 @@ export default function App() {
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <StatProvider>
           <HouseProvider>
-            <CssBaseline />
-            {layout === "dashboard" && (
-              <>
-                <Sidenav
-                  color={sidenavColor}
-                  brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                  brandName="GM-LOGEMENT"
-                  routes={routes}
-                  onMouseEnter={handleOnMouseEnter}
-                  onMouseLeave={handleOnMouseLeave}
-                />
-                <Configurator />
-                {configsButton}
-              </>
-            )}
-            {layout === "vr" && <Configurator />}
-            <Routes>
-              {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/dashboard" />} />
-            </Routes>
+            <HousesForSalesProvider>
+              <HousesForRenProvider>
+                <CssBaseline />
+                {layout === "dashboard" && (
+                  <>
+                    <Sidenav
+                      color={sidenavColor}
+                      brand={
+                        (transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite
+                      }
+                      brandName="GM-LOGEMENT"
+                      routes={routes}
+                      onMouseEnter={handleOnMouseEnter}
+                      onMouseLeave={handleOnMouseLeave}
+                    />
+                    <Configurator />
+                    {configsButton}
+                  </>
+                )}
+                {layout === "vr" && <Configurator />}
+                <Routes>
+                  {getRoutes(routes)}
+                  <Route path="*" element={<Navigate to="/dashboard" />} />
+                </Routes>
+              </HousesForRenProvider>
+            </HousesForSalesProvider>
           </HouseProvider>
         </StatProvider>
       </ThemeProvider>
@@ -181,26 +192,32 @@ export default function App() {
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <StatProvider>
         <HouseProvider>
-          <CssBaseline />
-          {layout === "dashboard" && (
-            <>
-              <Sidenav
-                color={sidenavColor}
-                brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                brandName="GM-LOGEEMENT"
-                routes={routes}
-                onMouseEnter={handleOnMouseEnter}
-                onMouseLeave={handleOnMouseLeave}
-              />
-              <Configurator />
-              {/* {configsButton} */}
-            </>
-          )}
-          {layout === "vr" && <Configurator />}
-          <Routes>
-            {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </Routes>
+          <HousesForSalesProvider>
+            <HousesForRenProvider>
+              <CssBaseline />
+              {layout === "dashboard" && (
+                <>
+                  <Sidenav
+                    color={sidenavColor}
+                    brand={
+                      (transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite
+                    }
+                    brandName="GM-LOGEEMENT"
+                    routes={routes}
+                    onMouseEnter={handleOnMouseEnter}
+                    onMouseLeave={handleOnMouseLeave}
+                  />
+                  <Configurator />
+                  {/* {configsButton} */}
+                </>
+              )}
+              {layout === "vr" && <Configurator />}
+              <Routes>
+                {getRoutes(routes)}
+                <Route path="*" element={<Navigate to="/dashboard" />} />
+              </Routes>
+            </HousesForRenProvider>
+          </HousesForSalesProvider>
         </HouseProvider>
       </StatProvider>
     </ThemeProvider>

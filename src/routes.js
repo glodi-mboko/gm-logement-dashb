@@ -51,7 +51,7 @@ import Icon from "@mui/material/Icon";
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
+    name: "Tableau de bord",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
@@ -59,7 +59,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
+    name: "Maisons en location",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",

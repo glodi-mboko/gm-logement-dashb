@@ -31,13 +31,13 @@ import MDButton from "components/MDButton";
 function SimpleBlogCard({ image, title, description, action }) {
   return (
     <Card>
-      <MDBox position="relative" borderRadius="lg" mt={-3} mx={2}>
+      <MDBox position="relative" borderRadius="lg" mt={-1} mx={2}>
         <MDBox
           component="img"
           src={image}
           alt={title}
           borderRadius="lg"
-          shadow="md"
+          shadow="lg"
           width="100%"
           height="100%"
           position="relative"
@@ -45,7 +45,7 @@ function SimpleBlogCard({ image, title, description, action }) {
         />
         <MDBox
           borderRadius="lg"
-          shadow="sm"
+          shadow="md"
           width="100%"
           height="100%"
           position="absolute"
@@ -53,13 +53,13 @@ function SimpleBlogCard({ image, title, description, action }) {
           top="3%"
           sx={{
             backgroundImage: `url(${image})`,
-            transform: "scale(0.94)",
-            filter: "blur(12px)",
+            transform: "scale(0.87)",
+            filter: "blur(10px)",
             backgroundSize: "cover",
           }}
         />
       </MDBox>
-      <MDBox p={3}>
+      <MDBox p={3} pt={1}>
         <MDTypography display="inline" variant="h5" textTransform="capitalize" fontWeight="bold">
           {title.toUpperCase()}
         </MDTypography>

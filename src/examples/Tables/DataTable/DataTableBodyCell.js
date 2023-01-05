@@ -20,7 +20,7 @@ import PropTypes from "prop-types";
 import MDBox from "components/MDBox";
 
 // eslint-disable-next-line react/prop-types
-function DataTableBodyCell({ noBorder, align, children, click }) {
+function DataTableBodyCell({ noBorder, align, children }) {
   return (
     <MDBox
       component="td"
@@ -33,7 +33,6 @@ function DataTableBodyCell({ noBorder, align, children, click }) {
       })}
     >
       <MDBox
-        onClick={() => click(children.props.row.index)}
         display="inline-block"
         width="max-content"
         color="text"

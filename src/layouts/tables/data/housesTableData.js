@@ -15,18 +15,20 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useContext } from "react";
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
+// import CircularProgress from "@mui/material/CircularProgress";
 
-import { useContext } from "react";
-import { HouseContext } from "context/house";
+import { HousesForRenContext } from "context/house";
 
 import { Avatar } from "@mui/material";
 
 export default function data() {
-  const [houses] = useContext(HouseContext);
+  const [houses] = useContext(HousesForRenContext);
 
   function stringToColor(string) {
     let hash = 0;
@@ -53,7 +55,7 @@ export default function data() {
       sx: {
         bgcolor: stringToColor(name),
       },
-      children: `${name[0].toUpperCase()}`,
+      children: `${name[0]?.toUpperCase()}`,
     };
   }
 
