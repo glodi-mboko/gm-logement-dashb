@@ -35,18 +35,52 @@ Coded by www.creative-tim.com
   10. The `component` key is used to store the component of its route.
 */
 
+import {
+  HouseProvider,
+  StatProvider,
+  HousesForSalesProvider,
+  HousesForRenProvider,
+} from "context/house";
+
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
-import Billing from "layouts/billing";
-import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
+// import Billing from "layouts/billing";
+import HousesForSales from "layouts/houseForSale";
+// import RTL from "layouts/rtl";
+// import Notifications from "layouts/notifications";
+// import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+
+function HomeComponent() {
+  return (
+    <StatProvider>
+      <HouseProvider>
+        <Dashboard />
+      </HouseProvider>
+    </StatProvider>
+  );
+}
+
+function HouseForSaleComponent() {
+  return (
+    <HousesForSalesProvider>
+      <HousesForSales />
+    </HousesForSalesProvider>
+  );
+}
+
+function HousesForRenComponent() {
+  return (
+    <HousesForRenProvider>
+      <Tables />
+    </HousesForRenProvider>
+  );
+}
 
 const routes = [
   {
@@ -55,50 +89,50 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <HomeComponent />,
   },
   {
     type: "collapse",
     name: "Maisons en location",
-    key: "tables",
+    key: "ren",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    route: "/ren",
+    component: <HousesForRenComponent />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
+    name: "Maisons en vente",
+    key: "sales",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    route: "/sales",
+    component: <HouseForSaleComponent />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "RTL",
+  //   key: "rtl",
+  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+  //   route: "/rtl",
+  //   component: <RTL />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Notifications",
+  //   key: "notifications",
+  //   icon: <Icon fontSize="small">notifications</Icon>,
+  //   route: "/notifications",
+  //   component: <Notifications />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
   {
-    type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
-  },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
-  {
-    type: "collapse",
+    type: "",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -106,7 +140,7 @@ const routes = [
     component: <SignIn />,
   },
   {
-    type: "collapse",
+    type: "",
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,

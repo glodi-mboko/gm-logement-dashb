@@ -21,3 +21,13 @@ export const getRealEstateForRen = async () => {
   const response = await api.get("/realEstate/for_ren");
   return response;
 };
+
+export const signIn = async (user) => {
+  const response = await api.post("auth/login", user);
+  return response;
+};
+
+export const signUp = async (newUser) => {
+  const response = await api.post("auth/signup", newUser);
+  return response;
+};

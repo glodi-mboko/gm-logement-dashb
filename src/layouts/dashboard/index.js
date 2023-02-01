@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -13,7 +14,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 // import Card from "@mui/material/Card";
@@ -32,16 +33,17 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import SimpleBlogCard from "examples/Cards/BlogCards/SimpleBlogCard";
 
 import { StatContext, HouseContext } from "context/house";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import { Backdrop } from "@mui/material";
-// import housesTableData from "./data/housesTableData";
 
 function Dashboard() {
   const [stat] = useContext(StatContext);
   const [realEstate] = useContext(HouseContext);
-  // const { columns, rows } = housesTableData();
   const [houses, setHouse] = useState([]);
+
+  const userToken = localStorage.getItem("mosali");
 
   useEffect(() => {
     if (realEstate.length > 0) {
@@ -49,77 +51,78 @@ function Dashboard() {
     }
   }, [realEstate]);
 
-  return realEstate.length > 0 ? (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Total publications"
-                count={stat.statHouse}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Total en vente"
-                count={stat.statSale}
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Total location"
-                count={stat.statRen}
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Utilisateurs"
-                count={stat.statUser}
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid>
-        </Grid>
-        <MDBox mt={4.5}>
+  if (userToken) {
+    return realEstate.length > 0 ? (
+      <DashboardLayout>
+        <DashboardNavbar />
+        <MDBox py={3}>
           <Grid container spacing={3}>
-            {houses.map((house, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Grid key={index} item xs={12} md={6} lg={4}>
-                {/* <DefaultProjectCard
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <ComplexStatisticsCard
+                  color="dark"
+                  icon="weekend"
+                  title="Total publications"
+                  count={stat.statHouse}
+                  percentage={{
+                    color: "success",
+                    amount: "+55%",
+                    label: "than lask week",
+                  }}
+                />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <ComplexStatisticsCard
+                  icon="leaderboard"
+                  title="Total en vente"
+                  count={stat.statSale}
+                  percentage={{
+                    color: "success",
+                    amount: "+3%",
+                    label: "than last month",
+                  }}
+                />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <ComplexStatisticsCard
+                  color="success"
+                  icon="store"
+                  title="Total location"
+                  count={stat.statRen}
+                  percentage={{
+                    color: "success",
+                    amount: "+1%",
+                    label: "than yesterday",
+                  }}
+                />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <ComplexStatisticsCard
+                  color="primary"
+                  icon="person_add"
+                  title="Utilisateurs"
+                  count={stat.statUser}
+                  percentage={{
+                    color: "success",
+                    amount: "",
+                    label: "Just updated",
+                  }}
+                />
+              </MDBox>
+            </Grid>
+          </Grid>
+          <MDBox mt={4.5}>
+            <Grid container spacing={3}>
+              {houses.map((house, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <Grid key={index} item xs={12} md={6} lg={4}>
+                  {/* <DefaultProjectCard
                   image={house.images ? house.images[0]?.secureUrl : ""}
                   title={house?.status?.toLowerCase() === "vente" ? "En vente" : "En location"}
                   description={house.overview || ""}
@@ -148,21 +151,21 @@ function Dashboard() {
                   ]}
                   label={`${house.province}|${house.town}`}
                 /> */}
-                <SimpleBlogCard
-                  image={house.images ? house.images[0]?.secureUrl : ""}
-                  title={house?.status?.toLowerCase() === "vente" ? "En vente" : "En location"}
-                  description={`${house.province}|${house.town}`}
-                  action={{
-                    route: "#",
-                    type: "internal",
-                    label: "contacter l'auteur",
-                    color: "primary",
-                  }}
-                />
-              </Grid>
-            ))}
+                  <SimpleBlogCard
+                    image={house.images ? house.images[0]?.secureUrl : ""}
+                    title={house?.status?.toLowerCase() === "vente" ? "En vente" : "En location"}
+                    description={`${house.province}|${house.town}`}
+                    action={{
+                      route: "#",
+                      type: "internal",
+                      label: "contacter l'auteur",
+                      color: "dark",
+                    }}
+                  />
+                </Grid>
+              ))}
 
-            {/* <Grid item xs={12} md={6} lg={4}>
+              {/* <Grid item xs={12} md={6} lg={4}>
               <DefaultProjectCard
                 image={house.images ? house.images[0].secureUrl : ""}
                 title={house?.status?.toLowerCase() === "vente" ? "En vente" : "En location"}
@@ -224,19 +227,26 @@ function Dashboard() {
                 label={`${house.province}|${house.town}`}
               />
             </Grid> */}
-          </Grid>
+            </Grid>
+          </MDBox>
         </MDBox>
-      </MDBox>
-      <Footer />
-    </DashboardLayout>
-  ) : (
-    <Backdrop
-      open={realEstate.length === 0}
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-    >
-      <CircularProgress color="inherit" />
-    </Backdrop>
-  );
+        <Footer />
+      </DashboardLayout>
+    ) : (
+      <Backdrop
+        open={realEstate.length === 0}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
+  } else {
+    return (
+      <Routes>
+        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+      </Routes>
+    );
+  }
 }
 
 export default Dashboard;

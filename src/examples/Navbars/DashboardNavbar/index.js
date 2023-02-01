@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -50,14 +50,17 @@ import {
   useMaterialUIController,
   setTransparentNavbar,
   setMiniSidenav,
-  setOpenConfigurator,
+  // setOpenConfigurator,
 } from "context";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
+
+  // if you want display settings add openConfigurator in these destructturation
+  const { miniSidenav, transparentNavbar, fixedNavbar, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [openAvatar, setOpenAvatar] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
   useEffect(() => {
@@ -87,9 +90,40 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  // const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+
+  const handleOpenAvatar = (event) => setOpenAvatar(event.target);
+  const handleCloseAvatar = () => setOpenAvatar(false);
+
+  const {
+    location: { origin },
+  } = window;
+
+  const signInRoute = `${origin}/authentication/sign-in`;
+
+  const logout = () => {
+    localStorage.removeItem("mosali");
+    window.location.assign(signInRoute);
+  };
+
+  // Render the drop avatar user
+  const renderAvatarMenu = () => (
+    <Menu
+      anchorEl={openAvatar}
+      anchorReference={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+      open={Boolean(openAvatar)}
+      onClose={handleCloseAvatar}
+      sx={{ mt: 2 }}
+    >
+      <NotificationItem onClick={logout} title="Se déconnecter" />
+    </Menu>
+  );
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -136,14 +170,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
             <MDBox pr={1}>
-              <MDInput label="Search here" />
+              <MDInput label="Rechercher ici" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle}>account_circle</Icon>
-                </IconButton>
-              </Link>
+              <IconButton
+                onClick={handleOpenAvatar}
+                sx={navbarIconButton}
+                color="inherit"
+                size="small"
+                disableRipple
+                aria-controls="avatar-menu"
+                aria-haspopup="true"
+                variant="contained"
+              >
+                <Icon sx={iconsStyle}>account_circle</Icon>
+              </IconButton>
+              {renderAvatarMenu()}
               <IconButton
                 size="small"
                 disableRipple
@@ -155,7 +197,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 size="small"
                 disableRipple
                 color="inherit"
@@ -163,7 +205,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleConfiguratorOpen}
               >
                 <Icon sx={iconsStyle}>settings</Icon>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 size="small"
                 disableRipple

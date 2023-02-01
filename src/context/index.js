@@ -60,6 +60,7 @@ function reducer(state, action) {
       return { ...state, layout: action.value };
     }
     case "DARKMODE": {
+      // darkMode dynamic darkMode: action.value
       return { ...state, darkMode: action.value };
     }
     default: {
@@ -74,13 +75,13 @@ function MaterialUIControllerProvider({ children }) {
     miniSidenav: false,
     transparentSidenav: false,
     whiteSidenav: false,
-    sidenavColor: "info",
+    sidenavColor: "warning",
     transparentNavbar: true,
     fixedNavbar: true,
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
-    darkMode: false,
+    darkMode: true,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);

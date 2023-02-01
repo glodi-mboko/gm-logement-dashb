@@ -1,6 +1,12 @@
 import { useState, useEffect, createContext } from "react";
 import { getStats, getRealEstate, getRealEstateForRen, getRealEstateForSales } from "services";
 
+const {
+  location: { origin },
+} = window;
+
+const signInRoute = `${origin}/authentication/sign-in`;
+
 export const StatContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -14,7 +20,11 @@ export function StatProvider({ children }) {
           setStat({ ...res.data });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.status === 401) {
+          window.location.assign(signInRoute);
+        }
+      });
   };
 
   useEffect(() => {
@@ -38,7 +48,11 @@ export function HouseProvider({ children }) {
           setHouse(res.data);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.status === 401) {
+          window.location.assign(signInRoute);
+        }
+      });
   };
   useEffect(() => {
     getHouses();
@@ -54,21 +68,30 @@ export const HousesForRenContext = createContext();
 // eslint-disable-next-line react/prop-types
 export function HousesForRenProvider({ children }) {
   const [housesForRen, setHousesForRen] = useState([]);
+  const [isLoading, setIsLoading] = useState([]);
   const getHousesForRen = () => {
+    setIsLoading(true);
     getRealEstateForRen()
       .then((res) => {
         if (res.status === 200) {
           setHousesForRen(res.data);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.status === 401) {
+          window.location.assign(signInRoute);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   useEffect(() => {
     getHousesForRen();
   }, []);
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <HousesForRenContext.Provider value={[housesForRen, setHousesForRen]}>
+    <HousesForRenContext.Provider value={[housesForRen, isLoading, setHousesForRen]}>
       {children}
     </HousesForRenContext.Provider>
   );
@@ -79,22 +102,31 @@ export const HousesForSalesContext = createContext();
 // eslint-disable-next-line react/prop-types
 export function HousesForSalesProvider({ children }) {
   const [housesForSales, setHousesForSales] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const getHousesForSales = () => {
+    setIsLoading(true);
     getRealEstateForSales()
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setHousesForSales(res.data);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.status === 401) {
+          window.location.assign(signInRoute);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   useEffect(() => {
     getHousesForSales();
   }, []);
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <HousesForSalesContext.Provider value={[housesForSales, setHousesForSales]}>
+    <HousesForSalesContext.Provider value={[housesForSales, isLoading, setHousesForSales]}>
       {children}
     </HousesForSalesContext.Provider>
   );

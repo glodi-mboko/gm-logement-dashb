@@ -28,10 +28,14 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
+import { useContext } from "react";
+import { HousesForRenContext } from "context/house";
+import { Skeleton } from "@mui/material";
 import housesTableData from "./data/housesTableData";
 
 function Tables() {
   const { columns, rows } = housesTableData();
+  const [, isLoading] = useContext(HousesForRenContext);
 
   return (
     <DashboardLayout>
@@ -46,7 +50,7 @@ function Tables() {
                 py={3}
                 px={2}
                 variant="gradient"
-                bgColor="info"
+                bgColor="dark"
                 borderRadius="lg"
                 coloredShadow="info"
               >
@@ -55,13 +59,25 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+                {isLoading ? (
+                  <Grid minHeight={350}>
+                    <Skeleton
+                      style={{ borderBottomRightRadius: 12, borderBottomLeftRadius: 12 }}
+                      sx={{ bgcolor: "grey.800" }}
+                      animation="pulse"
+                      height={350}
+                      variant="rounded"
+                    />
+                  </Grid>
+                ) : (
+                  <DataTable
+                    table={{ columns, rows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                )}
               </MDBox>
             </Card>
           </Grid>

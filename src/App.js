@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -49,16 +50,11 @@ import routes from "routes";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
-import {
-  StatProvider,
-  HouseProvider,
-  HousesForSalesProvider,
-  HousesForRenProvider,
-} from "context/house";
-
 // Images
 import brandWhite from "assets/images/gm-logement.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+
+// import SignIn from "layouts/authentication/sign-in";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -75,6 +71,9 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  // const [isAuth, setIsAut] = useState(false);
+  // const userToken = localStorage.getItem("mosali");
+  // const [showHome, setShowHome] = useState(false);
 
   // Cache for the rtl
   useMemo(() => {
@@ -116,6 +115,15 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  // check if user if auth
+  // useEffect(() => {
+  //   if (userToken) {
+  //     setShowHome(true);
+  //     console.log(userToken);
+  //     console.log(showHome);
+  //   }
+  // });
+
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {
@@ -156,70 +164,50 @@ export default function App() {
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-        <StatProvider>
-          <HouseProvider>
-            <HousesForSalesProvider>
-              <HousesForRenProvider>
-                <CssBaseline />
-                {layout === "dashboard" && (
-                  <>
-                    <Sidenav
-                      color={sidenavColor}
-                      brand={
-                        (transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite
-                      }
-                      brandName="GM-LOGEMENT"
-                      routes={routes}
-                      onMouseEnter={handleOnMouseEnter}
-                      onMouseLeave={handleOnMouseLeave}
-                    />
-                    <Configurator />
-                    {configsButton}
-                  </>
-                )}
-                {layout === "vr" && <Configurator />}
-                <Routes>
-                  {getRoutes(routes)}
-                  <Route path="*" element={<Navigate to="/dashboard" />} />
-                </Routes>
-              </HousesForRenProvider>
-            </HousesForSalesProvider>
-          </HouseProvider>
-        </StatProvider>
+        <CssBaseline />
+        {layout === "dashboard" && (
+          <>
+            <Sidenav
+              color={sidenavColor}
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+              brandName="GM-LOGEMENT"
+              routes={routes}
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+            />
+            <Configurator />
+            {configsButton}
+          </>
+        )}
+        {layout === "vr" && <Configurator />}
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Routes>
       </ThemeProvider>
     </CacheProvider>
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <StatProvider>
-        <HouseProvider>
-          <HousesForSalesProvider>
-            <HousesForRenProvider>
-              <CssBaseline />
-              {layout === "dashboard" && (
-                <>
-                  <Sidenav
-                    color={sidenavColor}
-                    brand={
-                      (transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite
-                    }
-                    brandName="GM-LOGEEMENT"
-                    routes={routes}
-                    onMouseEnter={handleOnMouseEnter}
-                    onMouseLeave={handleOnMouseLeave}
-                  />
-                  <Configurator />
-                  {/* {configsButton} */}
-                </>
-              )}
-              {layout === "vr" && <Configurator />}
-              <Routes>
-                {getRoutes(routes)}
-                <Route path="*" element={<Navigate to="/dashboard" />} />
-              </Routes>
-            </HousesForRenProvider>
-          </HousesForSalesProvider>
-        </HouseProvider>
-      </StatProvider>
+      <CssBaseline />
+      {layout === "dashboard" && (
+        <>
+          <Sidenav
+            color={sidenavColor}
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+            brandName="GM-LOGEEMENT"
+            routes={routes}
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+          />
+          <Configurator />
+          {/* {configsButton} */}
+        </>
+      )}
+      {layout === "vr" && <Configurator />}
+      <Routes>
+        {getRoutes(routes)}
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+      </Routes>
     </ThemeProvider>
   );
 }

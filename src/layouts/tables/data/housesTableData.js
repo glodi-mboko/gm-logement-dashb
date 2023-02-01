@@ -28,8 +28,7 @@ import { HousesForRenContext } from "context/house";
 import { Avatar } from "@mui/material";
 
 export default function data() {
-  const [houses] = useContext(HousesForRenContext);
-
+  const [houses, ,] = useContext(HousesForRenContext);
   function stringToColor(string) {
     let hash = 0;
     let i;
