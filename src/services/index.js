@@ -23,11 +23,11 @@ export const getRealEstateForRen = async () => {
 };
 
 export const signIn = async (user) => {
-  const response = await api.post("auth/login", user);
+  const response = await api.post("/auth/login", user);
   return response;
 };
 
 export const signUp = async (newUser) => {
-  const response = await api.post("auth/signup", newUser);
+  const response = await api.post("/auth/signup", newUser);
   return response;
 };
